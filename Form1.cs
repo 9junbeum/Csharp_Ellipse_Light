@@ -792,7 +792,7 @@ namespace UioTest
             blink += Convert.ToInt32(textBox6.Text, 10);
             label10.Text = string.Format("usb_io_output(0x{0:x},0x{1:x},2,0,0,0)", selectID, blink);
             //result = usb_io_output(selectID, blink, 2, 0, 0, 0);
-            ctr.control_light(2, true, 1, 2000);
+            ctr.control_light(2, false, 0, 0);
             //if (result) label11.Text = "True";
             //else label11.Text = "False";
         }
@@ -808,10 +808,9 @@ namespace UioTest
             blink = Convert.ToInt32(textBox3.Text, 10) * 16;
             blink += Convert.ToInt32(textBox7.Text, 10);
             label10.Text = string.Format("usb_io_output(0x{0:x},0x{1:x},3,0,0,0)", selectID, blink);
-            //result = usb_io_output(selectID, blink, 3, 0, 0, 0);
-            ctr.control_light(3, true, 1, 2000);
-            //if (result) label11.Text = "True";
-            //else label11.Text = "False";
+            result = usb_io_output(selectID, blink, 3, 0, 0, 0);
+            if (result) label11.Text = "True";
+            else label11.Text = "False";
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -825,10 +824,9 @@ namespace UioTest
             blink = Convert.ToInt32(textBox4.Text, 10) * 16 ;
             blink += Convert.ToInt32(textBox8.Text, 10);
             label10.Text = string.Format("usb_io_output(0x{0:x},0x{1:x},4,0,0,0)", selectID, blink);
-            //result = usb_io_output(selectID, blink, 4, 0, 0, 0);
-            ctr.control_light(4, true, 1, 2000);
-            //if (result) label11.Text = "True";
-            //else label11.Text = "False";
+            result = usb_io_output(selectID, blink, 4, 0, 0, 0);
+            if (result) label11.Text = "True";
+            else label11.Text = "False";
         }
 
 	}

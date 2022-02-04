@@ -78,7 +78,10 @@ namespace UioTest
                 default: ITV =   0; break;
             }
 
-            timer.Interval = delay;
+            if(delay > 0)
+            {
+                timer.Interval = delay;
+            }
             timer.Tick += new EventHandler(OnTimedEvent);
 
             if (on_off)
