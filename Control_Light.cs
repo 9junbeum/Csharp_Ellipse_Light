@@ -96,7 +96,7 @@ namespace UioTest
             }
             else
             {
-                usb_io_output(ID, ITV, this.light * (-1), 0, 0, 0);
+                usb_io_output(ID, 0, this.light * (-1), 0, 0, 0);
             }
             
         }
