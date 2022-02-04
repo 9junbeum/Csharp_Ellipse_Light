@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Runtime.InteropServices;
 using System.Threading;
 
@@ -16,8 +15,16 @@ namespace UioTest
         [DllImport("uio.dll")]
         private static extern bool usb_io_reset(int pID);
 
+        int ID = 0x261;
+        int ITV = 0; //interval
+        int light = 0;
+        //타이머 생성.
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
         public void control_light(int light, bool on_off, int interval, int delay)
         {
+            this.light = light;
+
             //사용법
             //
             //light : 1 ->Red
@@ -49,10 +56,8 @@ namespace UioTest
             //delay : 0     -> 계속 유지
             //delay : 1000  -> 1초 유지
 
-            int ID = 0x261;
-            int ITV = 0; //interval
 
-            switch(interval)
+            switch (interval)
             {
                 case  0: ITV =   0; break;
                 case  1: ITV =  17; break;
@@ -73,21 +78,32 @@ namespace UioTest
                 default: ITV =   0; break;
             }
 
-            if(on_off)
+            timer.Interval = delay;
+            timer.Tick += new EventHandler(OnTimedEvent);
+
+            if (on_off)
             {
-                usb_io_output(ID, ITV, light, 0, 0, 0);
+                timer.Stop();
+                usb_io_output(ID, ITV, this.light, 0, 0, 0);
                 if(delay != 0)
                 {
                     //끄기 (초기화)
-                    Thread.Sleep(delay);
-                    usb_io_reset(ID);
+                    timer.Start();
                 }
             }
             else
             {
-                usb_io_output(ID, ITV, light * (-1), 0, 0, 0);
+                usb_io_output(ID, ITV, this.light * (-1), 0, 0, 0);
             }
             
         }
+        
+        private void OnTimedEvent(Object sender, System.EventArgs e)
+        {
+            //usb_io_reset(ID);
+            usb_io_output(ID, 0, light * (-1), 0, 0, 0);
+            timer.Stop();
+        }
+
     }
 }
