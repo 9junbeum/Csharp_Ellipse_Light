@@ -27,6 +27,8 @@ namespace UioTest
         /// uio.dll을 사용하기 위한 선언부입니다.
         /// </summary>
         /// 
+        Control_Light ctr = new Control_Light();
+
         [DllImport("uio.dll")]
         private static extern int usb_io_init(int pID);
         [DllImport("uio.dll")]
@@ -789,9 +791,10 @@ namespace UioTest
             blink = Convert.ToInt32(textBox2.Text, 10) * 16;
             blink += Convert.ToInt32(textBox6.Text, 10);
             label10.Text = string.Format("usb_io_output(0x{0:x},0x{1:x},2,0,0,0)", selectID, blink);
-            result = usb_io_output(selectID, blink, 2, 0, 0, 0);
-            if (result) label11.Text = "True";
-            else label11.Text = "False";
+            //result = usb_io_output(selectID, blink, 2, 0, 0, 0);
+            ctr.control_light(2, true, 1,0);
+            //if (result) label11.Text = "True";
+            //else label11.Text = "False";
         }
 
         private void button11_Click(object sender, EventArgs e)
